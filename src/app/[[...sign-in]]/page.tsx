@@ -14,6 +14,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     const role = user?.publicMetadata.role;
+    console.log(user?.publicMetadata);
 
     if (role) {
       router.push(`/${role}`);
