@@ -2,22 +2,24 @@
 
 import * as Clerk from '@clerk/elements/common'
 import * as SignIn from '@clerk/elements/sign-in'
-import { useUser } from "@clerk/nextjs";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useClerk, useUser } from '@clerk/clerk-react'
 
-export default function SignInPage() {
-  const { user, isSignedIn, isLoaded } = useUser();
-  const router = useRouter();
+export default function LoginPage() {
+  const { user, isLoaded } = useUser() // Fetch the current user
+  const router = useRouter()
+  const clerk = useClerk()
 
-  // Redirect the user immediately if signed in
-  if (isLoaded && isSignedIn) {
-    const role = user?.publicMetadata?.role;
-    console.log(user);
-    console.log(role);
-    if (role) {
-      redirect(`/${role}`);
+  // Redirect based on user's role after sign-in
+  useEffect(() => {
+    if (isLoaded && user) {
+      const role = user.publicMetadata.role // Assuming the role is stored in publicMetadata
+      if (role) {
+        router.push(`/${role}`) // Redirect to /{role}
+      }
     }
-  }
+  }, [isLoaded, user, router])
   return (
     <div className="grid w-full flex-grow items-center bg-zinc-100 px-4 sm:justify-center">
       <SignIn.Root>
@@ -77,4 +79,5 @@ export default function SignInPage() {
     </div>
   )
 }
+
 
