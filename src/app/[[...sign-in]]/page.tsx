@@ -3,7 +3,7 @@
 import * as Clerk from '@clerk/elements/common'
 import * as SignIn from '@clerk/elements/sign-in'
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 
 export default function SignInPage() {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -12,8 +12,10 @@ export default function SignInPage() {
   // Redirect the user immediately if signed in
   if (isLoaded && isSignedIn) {
     const role = user?.publicMetadata?.role;
+    console.log(user);
+    console.log(role);
     if (role) {
-      router.push(`/${role}`);
+      redirect(`/${role}`);
     }
   }
   return (
