@@ -1,12 +1,14 @@
 {
-  "name": "lama-dev-next-dashboard",
+  "name": "dataseed-dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "ts-node prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/elements": "^0.14.6",
